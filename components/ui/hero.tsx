@@ -3,6 +3,8 @@
 import { Button } from "@/components/ui/button";
 import { MoveRight } from "lucide-react";
 import { motion } from "motion/react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 interface Beam {
@@ -152,6 +154,8 @@ export const PremiumHero = () => {
     return () => clearInterval(interval);
   }, []);
 
+  const { push } = useRouter();
+
   return (
     <div className="relative w-full h-screen overflow-hidden">
       <canvas ref={noiseRef} className="absolute inset-0 z-0 pointer-events-none" />
@@ -159,9 +163,11 @@ export const PremiumHero = () => {
 
       <div className="relative z-20 flex h-screen w-full items-center justify-center px-6 text-center">
         <div className="container mx-auto flex flex-col items-center gap-12 text-center">
-          <Button variant="secondary" size="sm" className="gap-4 font-dana">
-            نمایش نمودار واریز <MoveRight className="w-4 h-4" />
-          </Button>
+          <Link href={"/chart"}>
+            <Button variant="secondary" size="sm" className="gap-4 font-dana">
+              نمایش نمودار واریز <MoveRight className="w-4 h-4" />
+            </Button>
+          </Link>
 
           <h1 className="text-5xl md:text-7xl max-w-2xl tracking-tighter font-regular">
             <span className="text-white font-black">کی حقوق میدن؟</span>
@@ -186,10 +192,12 @@ export const PremiumHero = () => {
           </p>
 
           <div className="flex flex-row gap-3 flex-wrap justify-center">
-            <Button size="sm" className="gap-4" variant="outline">
-              به نظرت امروز حقوق میدن؟
-              <MoveRight className="w-4 h-4" />
-            </Button>
+            <Link href={"/predict"}>
+              <Button size="sm" className="gap-4" variant="outline">
+                به نظرت امروز حقوق میدن؟
+                <MoveRight className="w-4 h-4" />
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
