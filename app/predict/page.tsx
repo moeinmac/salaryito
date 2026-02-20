@@ -1,4 +1,4 @@
-import Predict from "@/components/predict/predict";
+import SalaryOracle from "@/components/predict/SalaryPredict";
 import { db } from "@/db/db";
 import { salaries } from "@/db/schema";
 import { FC } from "react";
@@ -6,7 +6,7 @@ import { FC } from "react";
 const Page: FC = async () => {
   const allSalaries = await db.select().from(salaries);
 
-  return <Predict data={allSalaries} />;
+  return <SalaryOracle history={allSalaries} />;
 };
 
 export default Page;
