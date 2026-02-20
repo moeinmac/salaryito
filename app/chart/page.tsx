@@ -1,13 +1,12 @@
-import SalaryForm from "@/components/salary-form/salary-form";
+import SalaryDashboard from "@/components/charts/charts";
+import { db } from "@/db/db";
+import { salaries } from "@/db/schema";
 import { FC } from "react";
 
-const chartPage: FC = async () => {
-  return (
-    <div>
-      <h1>اضافه کردن یک رکورد جدید</h1>
-      <SalaryForm />
-    </div>
-  );
+const Page: FC = async () => {
+  const allSalaries = await db.select().from(salaries);
+
+  return <SalaryDashboard data={allSalaries} />;
 };
 
-export default chartPage;
+export default Page;

@@ -37,7 +37,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${danaFont.variable} font-dana antialiased`}>
+      <body className={`${danaFont.variable} font-dana antialiased dark`}>
         {children}
         <Toaster />
       </body>
