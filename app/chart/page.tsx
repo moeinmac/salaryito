@@ -1,7 +1,12 @@
 import { FC } from "react";
+import { toast } from "sonner";
 
-const chartPage: FC = () => {
-  return <div>salam</div>;
+import { Button } from "@/components/ui/button";
+import { db } from "@/db/drizzle";
+
+const chartPage: FC = async () => {
+  // return <div>{<Button onClick={() => sendRequest()}>add new log</Button>}</div>;
+  return <div>ss</div>;
 };
 
 export default chartPage;

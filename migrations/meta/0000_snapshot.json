@@ -1,11 +1,11 @@
 {
-  "id": "df0ed337-14b8-47f4-8a25-a3a57bb643e5",
+  "id": "189e0cfb-73e5-4274-a1c9-59afd9b5e163",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
-    "public.log": {
-      "name": "log",
+    "public.salaries": {
+      "name": "salaries",
       "schema": "",
       "columns": {
         "id": {
@@ -14,18 +14,35 @@
           "primaryKey": true,
           "notNull": true
         },
-        "date": {
-          "name": "date",
-          "type": "timestamp",
+        "paid_at": {
+          "name": "paid_at",
+          "type": "timestamp with time zone",
           "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
+          "notNull": true
         },
-        "description": {
-          "name": "description",
-          "type": "text",
+        "jalali_year": {
+          "name": "jalali_year",
+          "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
+        },
+        "jalali_month": {
+          "name": "jalali_month",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "jalali_day": {
+          "name": "jalali_day",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "paid_hour": {
+          "name": "paid_hour",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
         }
       },
       "indexes": {},
