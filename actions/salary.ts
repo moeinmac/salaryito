@@ -1,13 +1,13 @@
 "use server";
 
-import { format } from "date-fns-jalali";
-import { salaries } from "@/db/schema";
 import { db } from "@/db/db";
+import { salaries } from "@/db/schema";
+import { format } from "date-fns-jalali";
 
 export async function addSalaryRecord(formData: FormData) {
   try {
-    const rawDateString = formData.get("paidAt") as string;
-    const paidAtDate = new Date(rawDateString);
+    const isoDate = formData.get("paidAt") as string;
+    const dateObj = new Date(isoDate);
 
     const iranTimeStr = new Intl.DateTimeFormat("en-GB", {
       hour: "2-digit",
@@ -15,19 +15,20 @@ export async function addSalaryRecord(formData: FormData) {
       second: "2-digit",
       hour12: false,
       timeZone: "Asia/Tehran",
-    }).format(paidAtDate);
+    }).format(dateObj);
 
     await db.insert(salaries).values({
-      paidAt: paidAtDate,
-      jalaliYear: parseInt(format(paidAtDate, "yyyy"), 10),
-      jalaliMonth: parseInt(format(paidAtDate, "MM"), 10),
-      jalaliDay: parseInt(format(paidAtDate, "dd"), 10),
+      paidAt: dateObj,
+      jalaliYear: parseInt(format(dateObj, "yyyy"), 10),
+      jalaliMonth: parseInt(format(dateObj, "MM"), 10),
+      jalaliDay: parseInt(format(dateObj, "dd"), 10),
       paidTime: iranTimeStr,
     });
 
-    return { success: true, message: "حقوق با موفقیت ثبت شد!" };
-  } catch (error) {
-    console.error("خطا در ثبت حقوق:", error);
-    return { success: false, message: "مشکلی در ثبت اطلاعات پیش آمد." };
+    return { success: true, message: "با موفقیت ثبت شد" };
+  } catch (e) {
+    console.log(e);
+
+    return { success: false, message: "خطایی رخ داد" };
   }
 }
