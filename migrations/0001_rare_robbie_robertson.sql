@@ -1,0 +1,1 @@
+ALTER TABLE "salaries" RENAME COLUMN "paid_hour" TO "paid_time";

@@ -1,4 +1,4 @@
-import { integer, pgTable, serial, timestamp } from "drizzle-orm/pg-core";
+import { pgTable, serial, timestamp, integer, time } from "drizzle-orm/pg-core";
 
 export const salaries = pgTable("salaries", {
   id: serial("id").primaryKey(),
@@ -6,5 +6,5 @@ export const salaries = pgTable("salaries", {
   jalaliYear: integer("jalali_year").notNull(),
   jalaliMonth: integer("jalali_month").notNull(),
   jalaliDay: integer("jalali_day").notNull(),
-  paidHour: integer("paid_hour").notNull(),
+  paidTime: time("paid_time").notNull(),
 });

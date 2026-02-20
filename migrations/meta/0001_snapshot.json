@@ -1,0 +1,68 @@
+{
+  "id": "a48df4f7-4b99-45ce-b1df-fca186f9af52",
+  "prevId": "189e0cfb-73e5-4274-a1c9-59afd9b5e163",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.salaries": {
+      "name": "salaries",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "paid_at": {
+          "name": "paid_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "jalali_year": {
+          "name": "jalali_year",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "jalali_month": {
+          "name": "jalali_month",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "jalali_day": {
+          "name": "jalali_day",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "paid_time": {
+          "name": "paid_time",
+          "type": "time",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}
