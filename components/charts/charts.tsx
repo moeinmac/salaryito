@@ -10,6 +10,7 @@ import { FC, useMemo, useState } from "react";
 import { Area, AreaChart, Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 import Insights from "./insights";
 import { toPersianNumbers } from "@/lib/utils";
+import Link from "next/link";
 
 const chartConfig = {
   count: {
@@ -100,14 +101,16 @@ const SalaryDashboard: FC<SalaryDashboardProps> = ({ data }) => {
           </Select>
         </motion.div>
         <motion.div initial={{ x: -20, opacity: 0 }} animate={{ x: 0, opacity: 1 }}>
-          <div className="flex items-center gap-3 mb-2">
-            <h1 className="text-4xl text-right font-black tracking-tighter">
-              سالاریـ<span className="text-emerald-500">تو</span>
-            </h1>
-            <div className="p-2 bg-emerald-500/20 rounded-lg">
-              <Zap className="w-6 h-6 text-emerald-400 fill-emerald-400/20" />
+          <Link href={"/"}>
+            <div className="flex items-center gap-3 mb-2">
+              <h1 className="text-4xl text-right font-black tracking-tighter">
+                سالاریـ<span className="text-emerald-500">تو</span>
+              </h1>
+              <div className="p-2 bg-emerald-500/20 rounded-lg">
+                <Zap className="w-6 h-6 text-emerald-400 fill-emerald-400/20" />
+              </div>
             </div>
-          </div>
+          </Link>
           <p className="text-zinc-500 font-medium">پس این حقوق ما چی شد؟</p>
         </motion.div>
       </div>
