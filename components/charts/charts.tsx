@@ -8,6 +8,8 @@ import { motion } from "framer-motion";
 import { Calendar, Clock, Wallet, Zap } from "lucide-react";
 import { FC, useMemo, useState } from "react";
 import { Area, AreaChart, Bar, BarChart, CartesianGrid, XAxis } from "recharts";
+import Insights from "./insights";
+import { toPersianNumbers } from "@/lib/utils";
 
 const chartConfig = {
   count: {
@@ -122,8 +124,8 @@ const SalaryDashboard: FC<SalaryDashboardProps> = ({ data }) => {
             <ChartContainer config={chartConfig} className="h-75 w-full">
               <BarChart data={dayData} margin={{ top: 20 }}>
                 <CartesianGrid vertical={false} strokeDasharray="3 3" stroke="#27272a" />
-                <XAxis dataKey="day" tickLine={false} axisLine={false} tickMargin={10} tickFormatter={(val) => `${val}`} />
-                <ChartTooltip content={<ChartTooltipContent hideLabel />} />
+                <XAxis dataKey="day" tickLine={false} axisLine={false} tickMargin={10} tickFormatter={(value) => toPersianNumbers(value)} />
+                <ChartTooltip content={<ChartTooltipContent hideLabel labelFormatter={(value) => `${toPersianNumbers(value)}`} />} />
                 <Bar dataKey="count" fill="var(--color-count)" radius={6} activeBar={<rect fill="white" />} />
               </BarChart>
             </ChartContainer>
@@ -161,26 +163,7 @@ const SalaryDashboard: FC<SalaryDashboardProps> = ({ data }) => {
           </CardContent>
         </Card>
       </div>
-
-      {/* Grid of Insight Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        {[
-          { label: "مجموع دفعات", val: filteredData.length, icon: Wallet, color: "text-blue-400" },
-          { label: "منظم‌ترین ماه", val: "شهریور", icon: Calendar, color: "text-purple-400" },
-          { label: "میانگین روز", val: "۲۹ ام", icon: Clock, color: "text-orange-400" },
-          { label: "وضعیت پایداری", val: "عالی", icon: Zap, color: "text-emerald-400" },
-        ].map((item, i) => (
-          <motion.div key={i} whileHover={{ y: -5 }} className="p-4 bg-zinc-900/80 border border-zinc-800 rounded-2xl flex items-center gap-4">
-            <div className={`p-3 rounded-xl bg-zinc-800 ${item.color}`}>
-              <item.icon size={20} />
-            </div>
-            <div>
-              <p className="text-xs text-zinc-500">{item.label}</p>
-              <p className="text-lg font-bold">{item.val}</p>
-            </div>
-          </motion.div>
-        ))}
-      </div>
+      <Insights data={filteredData} />
     </div>
   );
 };
