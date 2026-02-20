@@ -3,14 +3,14 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { toPersianNumbers } from "@/lib/utils";
 import { SelectSalary } from "@/types/model.type";
 import { motion } from "framer-motion";
-import { Calendar, Clock, Wallet, Zap } from "lucide-react";
+import { Zap } from "lucide-react";
+import Link from "next/link";
 import { FC, useMemo, useState } from "react";
 import { Area, AreaChart, Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 import Insights from "./insights";
-import { toPersianNumbers } from "@/lib/utils";
-import Link from "next/link";
 
 const chartConfig = {
   count: {
@@ -87,7 +87,7 @@ const SalaryDashboard: FC<SalaryDashboardProps> = ({ data }) => {
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-emerald-500/10 blur-[120px] rounded-full -z-10" />
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-cyan-500/10 blur-[120px] rounded-full -z-10" />
 
-      <div className="flex flex-col md:flex-row justify-between items-end gap-6">
+      <div className="flex flex-col-reverse md:flex-row justify-between items-end gap-6">
         <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
           <Select value={selectedYear} onValueChange={setSelectedYear}>
             <SelectTrigger className="w-45 bg-zinc-900/50 border-zinc-800 rounded-xl">
