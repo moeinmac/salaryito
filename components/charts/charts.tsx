@@ -17,10 +17,7 @@ const chartConfig = {
       dark: "#10b981",
     },
   },
-  time: {
-    label: "بازه زمانی",
-    color: "#06b6d4",
-  },
+  time: { label: "بازه زمانی", color: "#06b6d4" },
 } satisfies ChartConfig;
 
 interface SalaryDashboardProps {
@@ -52,6 +49,34 @@ const SalaryDashboard: FC<SalaryDashboardProps> = ({ data }) => {
       }).length;
       return { label, count };
     });
+  }, [filteredData]);
+
+  const peakTimeAnalysis = useMemo(() => {
+    if (filteredData.length === 0) return { text: "داده‌ای برای تحلیل وجود ندارد", count: 0 };
+
+    const counts = new Array(12).fill(0);
+
+    filteredData.forEach((item) => {
+      const hour = parseInt(item.paidTime.split(":")[0]);
+      counts[Math.floor(hour / 2)]++;
+    });
+
+    const maxCount = Math.max(...counts);
+    const maxIndex = counts.indexOf(maxCount);
+
+    const startHour = maxIndex * 2;
+    const endHour = (maxIndex * 2 + 2) % 24;
+
+    let timeDescription = "";
+    if (startHour >= 5 && startHour < 12) timeDescription = "صبح";
+    else if (startHour >= 12 && startHour < 16) timeDescription = "ظهر";
+    else if (startHour >= 16 && startHour < 20) timeDescription = "عصر";
+    else timeDescription = "آخر شب یا بامداد";
+
+    return {
+      text: `بیشترین حقوق‌های شما در بازه ${timeDescription} (ساعت ${startHour} الی ${endHour}) واریز شده است`,
+      count: maxCount,
+    };
   }, [filteredData]);
 
   return (
@@ -89,7 +114,9 @@ const SalaryDashboard: FC<SalaryDashboardProps> = ({ data }) => {
         <Card className="lg:col-span-8 bg-zinc-900/40 border-zinc-800/50 backdrop-blur-xl relative overflow-hidden group">
           <CardHeader>
             <CardTitle className="text-xl text-right font-bold">توزیع ماهانه</CardTitle>
-            <CardDescription className="text-right">چه روز هایی بیشترین واریزی رو داشتیم؟</CardDescription>
+            <CardDescription className="text-right flex m-0 gap-2 ml-auto">
+              <p> چه روز هایی بیشترین واریزی رو داشتیم؟</p>
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <ChartContainer config={chartConfig} className="h-75 w-full">
@@ -106,6 +133,16 @@ const SalaryDashboard: FC<SalaryDashboardProps> = ({ data }) => {
         <Card className="lg:col-span-4 bg-zinc-900/40 border-zinc-800/50 backdrop-blur-xl">
           <CardHeader>
             <CardTitle className="text-xl font-bold text-right">ساعت های واریز</CardTitle>
+            <CardDescription>
+              <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} key={peakTimeAnalysis.text}>
+                <p className="text-sm text-emerald-400 leading-relaxed relative z-10 text-right font-medium">{peakTimeAnalysis.text}</p>
+                {filteredData.length > 0 && (
+                  <p className="text-[12px] text-emerald-500/60 text-right mt-2 uppercase tracking-widest">
+                    تعداد تکرار در این بازه: {peakTimeAnalysis.count} بار
+                  </p>
+                )}
+              </motion.div>
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <ChartContainer config={chartConfig} className="h-75 w-full">
@@ -121,9 +158,6 @@ const SalaryDashboard: FC<SalaryDashboardProps> = ({ data }) => {
                 <Area type="stepAfter" dataKey="count" stroke="var(--color-count)" fill="url(#fillTime)" strokeWidth={2} />
               </AreaChart>
             </ChartContainer>
-            <div className="mt-4 p-4 bg-emerald-500/10 rounded-xl border border-emerald-500/20">
-              <p className="text-xs text-emerald-400 leading-relaxed text-center">بیشتر حقوق‌های شما در بازه عصر (۱۶-۲۰) واریز شده است.</p>
-            </div>
           </CardContent>
         </Card>
       </div>
