@@ -11,6 +11,7 @@ import Link from "next/link";
 import { FC, useMemo, useState } from "react";
 import { Area, AreaChart, Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 import Insights from "./insights";
+import { peakTime } from "@/lib/peakTime";
 
 const chartConfig = {
   count: {
@@ -54,33 +55,7 @@ const SalaryDashboard: FC<SalaryDashboardProps> = ({ data }) => {
     });
   }, [filteredData]);
 
-  const peakTimeAnalysis = useMemo(() => {
-    if (filteredData.length === 0) return { text: "داده‌ای برای تحلیل وجود ندارد", count: 0 };
-
-    const counts = new Array(12).fill(0);
-
-    filteredData.forEach((item) => {
-      const hour = parseInt(item.paidTime.split(":")[0]);
-      counts[Math.floor(hour / 2)]++;
-    });
-
-    const maxCount = Math.max(...counts);
-    const maxIndex = counts.indexOf(maxCount);
-
-    const startHour = maxIndex * 2;
-    const endHour = (maxIndex * 2 + 2) % 24;
-
-    let timeDescription = "";
-    if (startHour >= 5 && startHour < 12) timeDescription = "صبح";
-    else if (startHour >= 12 && startHour < 16) timeDescription = "ظهر";
-    else if (startHour >= 16 && startHour < 20) timeDescription = "عصر";
-    else timeDescription = "آخر شب یا بامداد";
-
-    return {
-      text: `بیشترین حقوق‌های شما در بازه ${timeDescription} (ساعت ${startHour} الی ${endHour}) واریز شده است`,
-      count: maxCount,
-    };
-  }, [filteredData]);
+  const peakTimeAnalysis = useMemo(() => peakTime(filteredData), [filteredData]);
 
   return (
     <div className="min-h-screen bg-[#09090b] text-zinc-100 p-8 space-y-8 overflow-hidden relative">
@@ -143,7 +118,7 @@ const SalaryDashboard: FC<SalaryDashboardProps> = ({ data }) => {
                 <p className="text-sm text-emerald-400 leading-relaxed relative z-10 text-right font-medium">{peakTimeAnalysis.text}</p>
                 {filteredData.length > 0 && (
                   <p className="text-[12px] text-emerald-500/60 text-right mt-2 uppercase tracking-widest">
-                    تعداد تکرار در این بازه: {peakTimeAnalysis.count} بار
+                    تعداد تکرار در این بازه: {peakTimeAnalysis.frequentlyCount} بار
                   </p>
                 )}
               </motion.div>

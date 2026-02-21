@@ -5,7 +5,6 @@ import { FC } from "react";
 
 const Page: FC = async () => {
   const allSalaries = await db.select().from(salaries);
-
   return <Predict data={allSalaries} />;
 };
 

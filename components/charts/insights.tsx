@@ -4,6 +4,7 @@ import { Calendar, Clock, Wallet, Zap } from "lucide-react";
 import { FC, useMemo } from "react";
 import { motion } from "framer-motion";
 import { toPersianNumbers } from "@/lib/utils";
+import { peakDay } from "@/lib/peakDay";
 
 interface InsightProps {
   data: SelectSalary[];
@@ -17,9 +18,7 @@ const Insights: FC<InsightProps> = ({ data }) => {
     data.forEach((d) => (monthCounts[d.jalaliMonth] = (monthCounts[d.jalaliMonth] || 0) + 1));
     const topMonthNum = Object.keys(monthCounts).reduce((a, b) => (monthCounts[a] > monthCounts[b] ? a : b));
 
-    const dayCounts: any = {};
-    data.forEach((d) => (dayCounts[d.jalaliDay] = (dayCounts[d.jalaliDay] || 0) + 1));
-    const topDay = Object.keys(dayCounts).reduce((a, b) => (dayCounts[a] > dayCounts[b] ? a : b));
+    const peakDayOutPut = peakDay(data);
 
     const stability = analyzeStability(data);
 
@@ -40,10 +39,10 @@ const Insights: FC<InsightProps> = ({ data }) => {
       },
       {
         label: "روز واریز غالب",
-        val: ` ${toPersianNumbers(topDay)} ام ماه`,
+        val: ` ${toPersianNumbers(peakDayOutPut.day)} ام ماه`,
         icon: Clock,
         color: "text-orange-400",
-        desc: `تکرار در ${toPersianNumbers(dayCounts[topDay])} ماه`,
+        desc: `تکرار در ${toPersianNumbers(peakDayOutPut.frequentlyCount)} ماه`,
       },
       {
         label: "وضعیت پایداری",

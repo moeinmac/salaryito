@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 const danaFont = localFont({
   src: [
@@ -38,8 +39,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${danaFont.variable} font-dana antialiased dark`}>
-        {children}
-        <Toaster />
+        <TooltipProvider>
+          {children}
+          <Toaster />
+        </TooltipProvider>
       </body>
     </html>
   );
