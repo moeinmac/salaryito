@@ -30,6 +30,7 @@
     "drizzle-orm": "^0.45.1",
     "framer-motion": "^12.34.0",
     "hono": "4.11.1",
+    "jalaali-js": "^1.2.8",
     "lucide-react": "^0.562.0",
     "motion": "^12.34.2",
     "next": "16.1.6",
@@ -52,6 +53,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/jalaali-js": "^1.2.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

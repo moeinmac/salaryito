@@ -17,15 +17,3 @@ export const analyzeStability = (data: SelectSalary[]) => {
   if (stdDev < 4) return { label: "پایدار و خوب", color: "text-cyan-400" };
   return { label: "متغیر و نامنظم", color: "text-orange-400" };
 };
-
-export const getAverageTime = (data: SelectSalary[]) => {
-  if (data.length === 0) return "--:--";
-  const totalMinutes = data.reduce((acc, item) => {
-    const [h, m] = item.paidTime.split(":").map(Number);
-    return acc + (h * 60 + m);
-  }, 0);
-  const avgMinutes = totalMinutes / data.length;
-  const h = Math.floor(avgMinutes / 60);
-  const m = Math.floor(avgMinutes % 60);
-  return `${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}`;
-};
